@@ -47,12 +47,13 @@ async function run() {
   // 4.1  create the data base
   const plantsCollections = await client
     .db("plantnet-session-conceptual")
-    .collection("plant");
+    .collection("plants");
 
   try {
     // 4.3 create the severside post methods
     app.post("/add-plant", async (req, res) => {
       const plant = req.body;
+      console.log(plant);
       const result = await plantsCollections.insertOne(plant);
       res.send(result);
     });
