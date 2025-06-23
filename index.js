@@ -43,7 +43,19 @@ const client = new MongoClient(process.env.MONGODB_URI, {
   },
 });
 async function run() {
+  // 4.0 Now my requirement is send the add plant data to the database
+  // 4.1  create the data base
+  const plantsCollections = await client
+    .db("plantnet-session-conceptual")
+    .collection("plant");
+
   try {
+    // 4.3 create the severside post methods
+    app.post("/add-plant", async (req, res) => {
+      const plant = req.body;
+      const result = await plantsCollections.insertOne(plant);
+      res.send(result);
+    });
     // Generate jwt token
     app.post("/jwt", async (req, res) => {
       const email = req.body;
